@@ -1,0 +1,14 @@
+include: ssp_dmgtimenet_v6.yaml
+
+# Ablation "w/o HGF": replace the position-aware gated fusion of multi-scale
+# tokens with a uniform mean over scales (multi-scale extraction is kept, the
+# learned gating is removed).
+
+model:
+  config:
+    use_hgf: false
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/ablation_wo_hgf
+  tensorboard_dir: ../artifacts/tensorboard/ablation_wo_hgf
+  report_dir: ../artifacts/reports/ablation_wo_hgf

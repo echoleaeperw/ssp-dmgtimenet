@@ -1,0 +1,16 @@
+include: baseline_int_lstm.yaml
+
+data:
+  num_vehicles: 3
+
+model:
+  config:
+    num_vehicles: 3
+
+paths:
+  train: ../artifacts/platoons/highd_N3_h5_p3/train.npz
+  val: ../artifacts/platoons/highd_N3_h5_p3/val.npz
+  test: ../artifacts/platoons/highd_N3_h5_p3/test.npz
+  checkpoint_dir: ../artifacts/checkpoints/n_ext_N3/interaction_lstm
+  tensorboard_dir: ../artifacts/tensorboard/n_ext_N3/interaction_lstm
+  report_dir: ../artifacts/reports/n_ext_N3/interaction_lstm

@@ -1,0 +1,16 @@
+include: ssp_dmgtimenet_v6.yaml
+
+data:
+  num_vehicles: 7
+
+model:
+  config:
+    num_vehicles: 7
+
+paths:
+  train: ../artifacts/platoons/highd_N7_h5_p3/train.npz
+  val: ../artifacts/platoons/highd_N7_h5_p3/val.npz
+  test: ../artifacts/platoons/highd_N7_h5_p3/test.npz
+  checkpoint_dir: ../artifacts/checkpoints/n_ext_N7/ssp_dmgtimenet_v6
+  tensorboard_dir: ../artifacts/tensorboard/n_ext_N7/ssp_dmgtimenet_v6
+  report_dir: ../artifacts/reports/n_ext_N7/ssp_dmgtimenet_v6

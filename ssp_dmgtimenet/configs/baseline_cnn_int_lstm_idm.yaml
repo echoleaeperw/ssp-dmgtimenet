@@ -1,0 +1,26 @@
+include: default.yaml
+
+model:
+  name: cnn_int_lstm_idm
+  config:
+    num_vehicles: 5
+    history_steps: 50
+    predict_steps: 30
+    target_hz: 10.0
+    cnn_channels: 64
+    cnn_kernel: 5
+    cnn_layers: 2
+    lstm_hidden: 96
+    lstm_layers: 2
+    dropout: 0.1
+    leader_mode: constant_velocity
+
+loss:
+  weights:
+    coint: 0.0
+    delay: 0.0
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/cnn_int_lstm_idm
+  tensorboard_dir: ../artifacts/tensorboard/cnn_int_lstm_idm
+  report_dir: ../artifacts/reports/cnn_int_lstm_idm

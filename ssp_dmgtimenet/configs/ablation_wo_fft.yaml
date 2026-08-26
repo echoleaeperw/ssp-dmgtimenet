@@ -1,0 +1,12 @@
+include: ssp_dmgtimenet_v6.yaml
+
+# Ablation "w/o L_fft": remove the frequency-domain transfer-gain loss.
+
+loss:
+  weights:
+    fft: 0.0
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/ablation_wo_fft
+  tensorboard_dir: ../artifacts/tensorboard/ablation_wo_fft
+  report_dir: ../artifacts/reports/ablation_wo_fft

@@ -1,0 +1,23 @@
+include: default.yaml
+
+model:
+  name: platoon_lstm
+  config:
+    num_vehicles: 5
+    history_steps: 50
+    predict_steps: 30
+    target_hz: 10.0
+    hidden_dim: 128
+    num_layers: 2
+    dropout: 0.1
+    rnn_type: lstm
+
+loss:
+  weights:
+    coint: 0.0
+    delay: 0.0
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/platoon_lstm
+  tensorboard_dir: ../artifacts/tensorboard/platoon_lstm
+  report_dir: ../artifacts/reports/platoon_lstm

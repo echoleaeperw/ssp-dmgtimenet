@@ -1,0 +1,18 @@
+include: ssp_dmgtimenet_v6.yaml
+
+# Ablation "w/o CFE": remove the cross-vehicle cointegration branch entirely
+# (no CFE token in the feature stream, zero residuals) and drop the matching
+# cointegration loss term.
+
+model:
+  config:
+    use_cfe: false
+
+loss:
+  weights:
+    coint: 0.0
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/ablation_wo_cfe
+  tensorboard_dir: ../artifacts/tensorboard/ablation_wo_cfe
+  report_dir: ../artifacts/reports/ablation_wo_cfe

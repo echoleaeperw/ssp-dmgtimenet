@@ -1,0 +1,15 @@
+include: ssp_dmgtimenet_v6.yaml
+
+# Ablation "full graph instead of chain": lift the upstream-only spatial mask
+# so every vehicle may attend every other vehicle. The delay bias stays active
+# (cumulative tau is defined on j<i pairs; other entries keep zero delay).
+
+model:
+  config:
+    sp_daca:
+      spatial_mode: full
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/ablation_full_graph
+  tensorboard_dir: ../artifacts/tensorboard/ablation_full_graph
+  report_dir: ../artifacts/reports/ablation_full_graph

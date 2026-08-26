@@ -1,0 +1,29 @@
+include: default.yaml
+
+model:
+  name: idm_cascade
+  config:
+    num_vehicles: 5
+    history_steps: 50
+    predict_steps: 30
+    target_hz: 10.0
+    init_v0: 30.0
+    init_T: 1.5
+    init_a_max: 1.5
+    init_b: 2.0
+    init_s0: 2.0
+    delta: 4.0
+    leader_mode: constant_velocity
+
+# Disable learnt-stability terms for the physics baseline to keep the
+# comparison fair: all weights stay positive but coint/fft are zero because
+# the physics baseline has no SP-DACA / CFE residuals.
+loss:
+  weights:
+    coint: 0.0
+    delay: 0.0
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/idm_cascade
+  tensorboard_dir: ../artifacts/tensorboard/idm_cascade
+  report_dir: ../artifacts/reports/idm_cascade

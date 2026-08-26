@@ -1,0 +1,30 @@
+include: ssp_dmgtimenet_v5.yaml
+
+# v6: tau-collapse fix batch (training-side; the model-side root cause was the
+# inverted chain spatial mask, fixed directly in sp_daca.py).
+#
+# v5 failure mode: all 48 tau_logits collapsed to ~0 (= sigmoid mid-point,
+# tau == 1.40s) and never learned any delay structure from data. Causes:
+# 1. [root, fixed in code] chain spatial mask used j>=i (downstream) while
+#    cumulative_tau() only fills j<i, so every tau-dependent bias entry was
+#    masked out and tau_logits received zero data gradient.
+# 2. AdamW weight_decay dragged tau/sigma logits towards 0, which IS the
+#    sigmoid mid-point -> trainer now uses build_param_groups() so tau_logits,
+#    sigma_logits and time_pe_scale live in a decay-free group.
+# 3. delay_reg centre/head_var terms additionally pulled tau to the window
+#    centre and flattened the heads. With no opposing data gradient (cause 1)
+#    they fully determined the fixed point.
+#
+# v6 changes vs v5:
+# * delay_reg.weight_centre   0.05 -> 0.005 (keep anti-saturation role only)
+# * delay_reg.weight_head_var 0.10 -> 0.01  (allow heads to specialise)
+
+loss:
+  delay_reg:
+    weight_centre: 0.005
+    weight_head_var: 0.01
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/ssp_dmgtimenet_v6
+  tensorboard_dir: ../artifacts/tensorboard/ssp_dmgtimenet_v6
+  report_dir: ../artifacts/reports/ssp_dmgtimenet_v6

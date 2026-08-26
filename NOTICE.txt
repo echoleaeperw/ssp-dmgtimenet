@@ -1,0 +1,6 @@
+HighD and NGSIM raw trajectories are not redistributed with this code.
+
+- highD: apply at the official RWTH Aachen / ika page and comply with the dataset license.
+- NGSIM: FHWA / data.gov terms apply. Use only the US-101 and I-80 freeway periods listed in datasets/README.md.
+
+Place the CSVs locally as documented; do not commit or upload them with this package.

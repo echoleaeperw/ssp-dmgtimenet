@@ -1,0 +1,12 @@
+include: ssp_dmgtimenet_v6.yaml
+
+# Ablation "w/o L_sub": remove the sub-platoon amplification loss.
+
+loss:
+  weights:
+    sub: 0.0
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/ablation_wo_sub
+  tensorboard_dir: ../artifacts/tensorboard/ablation_wo_sub
+  report_dir: ../artifacts/reports/ablation_wo_sub

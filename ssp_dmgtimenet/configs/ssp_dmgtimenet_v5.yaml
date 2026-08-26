@@ -1,0 +1,47 @@
+include: ssp_dmgtimenet.yaml
+
+# v5: rebalanced stability curriculum.
+#
+# v4 failure mode: with weights adj/sub/fft = 0.1 the raw loss magnitudes
+# (adj~0.07, sub~0.09, fft~0.4-7.0, coint~1.9 vs pred~0.02 at epoch 45)
+# overwhelmed the prediction objective as soon as the adj/sub stage ramped,
+# val v-MAE collapsed 0.188 -> 0.399 within 4 epochs and early stopping fired
+# before the fft/coint stage ever started. best.pt therefore never saw any
+# stability loss.
+#
+# v5 changes:
+# 1. Loss weights rescaled so each regulariser contributes ~10-30% of the
+#    prediction loss at activation time.
+# 2. delta=0.05 tolerates the mild amplification present in real HighD data
+#    (ground-truth unstable_window_ratio at delta=0 is 0.976).
+# 3. Curriculum moved earlier (0.30/0.55) and epochs extended to 80 so the
+#    full loss is active for the final 20 epochs.
+# 4. best_min_progress=0.75 selects best.pt only after all loss terms are
+#    fully ramped, with early-stop patience counted from that point.
+
+loss:
+  stability:
+    delta: 0.05
+  curriculum:
+    stage_1_fraction: 0.30
+    stage_2_fraction: 0.55
+    ramp_window_fraction: 0.10
+  weights:
+    pred: 1.0
+    kin: 0.1
+    safe: 0.01
+    adj: 0.05
+    sub: 0.03
+    fft: 0.002
+    coint: 0.002
+    delay: 0.05
+
+trainer:
+  epochs: 80
+  early_stop_patience: 20
+  best_min_progress: 0.75
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/ssp_dmgtimenet_v5
+  tensorboard_dir: ../artifacts/tensorboard/ssp_dmgtimenet_v5
+  report_dir: ../artifacts/reports/ssp_dmgtimenet_v5

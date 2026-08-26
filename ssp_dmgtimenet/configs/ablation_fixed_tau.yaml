@@ -1,0 +1,15 @@
+include: ssp_dmgtimenet_v6.yaml
+
+# Ablation "fixed delay instead of learnable delay": freeze tau_logits at the
+# init value (tau = 1.0 s for every head/pair). sigma stays learnable and the
+# loss stack is identical to v6, so the only difference is tau learnability.
+
+model:
+  config:
+    sp_daca:
+      learnable_tau: false
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/ablation_fixed_tau
+  tensorboard_dir: ../artifacts/tensorboard/ablation_fixed_tau
+  report_dir: ../artifacts/reports/ablation_fixed_tau

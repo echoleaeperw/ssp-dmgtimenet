@@ -1,0 +1,12 @@
+include: ssp_dmgtimenet_v6.yaml
+
+# Ablation "w/o L_adj": remove the adjacent-pair string-stability loss.
+
+loss:
+  weights:
+    adj: 0.0
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/ablation_wo_adj
+  tensorboard_dir: ../artifacts/tensorboard/ablation_wo_adj
+  report_dir: ../artifacts/reports/ablation_wo_adj

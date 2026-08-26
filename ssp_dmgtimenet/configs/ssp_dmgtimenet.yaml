@@ -1,0 +1,31 @@
+include: default.yaml
+
+model:
+  name: ssp_dmgtimenet
+  config:
+    num_vehicles: 5
+    num_features_in: 8
+    target_hz: 10.0
+    history_steps: 50
+    predict_steps: 30
+    d_model: 96
+    num_heads: 4
+    num_layers: 3
+    ffn_dim: 192
+    dropout: 0.1
+    scales_seconds: [0.4, 0.8, 1.6, 2.4]
+    output_channels: [v, s, a, x_rel_leader]
+    sp_daca:
+      tau_min: 0.3
+      tau_max: 2.5
+      tau_init: 1.0
+      sigma_min: 0.1
+      sigma_max: 1.5
+      sigma_init: 0.5
+      qkv_bias: true
+      use_relative_pe: true
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/ssp_dmgtimenet
+  tensorboard_dir: ../artifacts/tensorboard/ssp_dmgtimenet
+  report_dir: ../artifacts/reports/ssp_dmgtimenet

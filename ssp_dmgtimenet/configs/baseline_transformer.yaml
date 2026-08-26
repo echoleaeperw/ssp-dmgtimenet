@@ -1,0 +1,24 @@
+include: default.yaml
+
+model:
+  name: platoon_transformer
+  config:
+    num_vehicles: 5
+    history_steps: 50
+    predict_steps: 30
+    target_hz: 10.0
+    d_model: 96
+    num_heads: 4
+    num_layers: 3
+    ffn_dim: 192
+    dropout: 0.1
+
+loss:
+  weights:
+    coint: 0.0
+    delay: 0.0
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/platoon_transformer
+  tensorboard_dir: ../artifacts/tensorboard/platoon_transformer
+  report_dir: ../artifacts/reports/platoon_transformer

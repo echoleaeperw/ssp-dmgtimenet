@@ -1,0 +1,19 @@
+include: default.yaml
+
+model:
+  name: fvdm_cascade
+  config:
+    num_vehicles: 5
+    history_steps: 50
+    predict_steps: 30
+    target_hz: 10.0
+
+loss:
+  weights:
+    coint: 0.0
+    delay: 0.0
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/fvdm_cascade
+  tensorboard_dir: ../artifacts/tensorboard/fvdm_cascade
+  report_dir: ../artifacts/reports/fvdm_cascade

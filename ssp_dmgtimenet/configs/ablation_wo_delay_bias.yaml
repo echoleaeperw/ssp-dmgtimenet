@@ -1,0 +1,19 @@
+include: ssp_dmgtimenet_v6.yaml
+
+# Ablation "w/o SP-DACA": disable the Gaussian delay-aware attention bias so
+# the encoder degenerates to plain (time+chain)-causal attention. tau/sigma
+# parameters become inert, so the delay regulariser is switched off too.
+
+model:
+  config:
+    sp_daca:
+      use_delay_bias: false
+
+loss:
+  weights:
+    delay: 0.0
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/ablation_wo_delay_bias
+  tensorboard_dir: ../artifacts/tensorboard/ablation_wo_delay_bias
+  report_dir: ../artifacts/reports/ablation_wo_delay_bias

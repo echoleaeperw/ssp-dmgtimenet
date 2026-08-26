@@ -1,0 +1,22 @@
+include: default.yaml
+
+model:
+  name: interaction_lstm
+  config:
+    num_vehicles: 5
+    history_steps: 50
+    predict_steps: 30
+    target_hz: 10.0
+    hidden_dim: 96
+    num_layers: 2
+    dropout: 0.1
+
+loss:
+  weights:
+    coint: 0.0
+    delay: 0.0
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/interaction_lstm
+  tensorboard_dir: ../artifacts/tensorboard/interaction_lstm
+  report_dir: ../artifacts/reports/interaction_lstm

@@ -1,0 +1,102 @@
+# Default scheme-C training configuration.
+#
+# Includes data layout, evaluator settings, default loss component values
+# and trainer hyper-parameters. Specific model YAMLs (e.g. ssp_dmgtimenet.yaml,
+# baselines.yaml) inherit this file via the `include` directive supported by
+# `ssp_dmgtimenet.utils.config.load_config`.
+
+paths:
+  train: ../artifacts/platoons/highd_N5_h5_p3/train.npz
+  val: ../artifacts/platoons/highd_N5_h5_p3/val.npz
+  test: ../artifacts/platoons/highd_N5_h5_p3/test.npz
+  checkpoint_dir: ../artifacts/checkpoints/ssp_dmgtimenet
+  tensorboard_dir: ../artifacts/tensorboard/ssp_dmgtimenet
+  report_dir: ../artifacts/reports/ssp_dmgtimenet
+
+data:
+  target_hz: 10.0
+  history_seconds: 5.0
+  predict_seconds: 3.0
+  num_vehicles: 5
+
+evaluator:
+  horizons_seconds: [1.0, 2.0, 3.0]
+  delta_unstable: 0.0
+
+loss:
+  prediction:
+    variables: [v, s, a, x_rel_leader]
+    weights:
+      v: 1.0
+      s: 1.0
+      a: 1.0
+      x_rel_leader: 0.5
+    loss_type: huber
+    huber_delta: 1.0
+    leader_weight: 1.0
+  kinematics:
+    target_hz: 10.0
+    weight_x: 1.0
+    weight_v: 1.0
+    weight_s: 0.5
+    enforce_velocity_nonnegative: true
+  safety:
+    min_gap: 0.5
+    min_time_headway: 0.6
+    ttc_threshold: 1.5
+    weight_gap: 1.0
+    weight_th: 0.5
+    weight_ttc: 0.5
+  stability:
+    detrend_window_steps: 8
+    delta: 0.0
+    target_hz: 10.0
+    fft_band_hz: [0.05, 0.5]
+    excitation_quantile: 0.25
+    excitation_floor: 0.05
+    weight_adj: 1.0
+    weight_sub: 1.0
+    weight_fft: 1.0
+  cointegration:
+    weight_var: 1.0
+    weight_diff: 0.5
+  delay_reg:
+    weight_smooth: 1.0
+    weight_centre: 0.05
+    weight_head_var: 0.1
+    weight_sigma_centre: 0.05
+    target_centre_unit: 0.5
+  curriculum:
+    stage_1_fraction: 0.5
+    stage_2_fraction: 0.75
+    ramp_window_fraction: 0.1
+  weights:
+    pred: 1.0
+    kin: 0.1
+    safe: 0.01
+    adj: 0.1
+    sub: 0.1
+    fft: 0.1
+    coint: 0.05
+    delay: 0.05
+  excitation_gate:
+    quantile: 0.25
+    floor: 0.05
+    momentum: 0.1
+
+trainer:
+  epochs: 60
+  batch_size: 64
+  learning_rate: 3.0e-4
+  weight_decay: 1.0e-4
+  grad_clip_norm: 1.0
+  warmup_epochs: 2
+  eval_every: 1
+  log_every: 50
+  use_amp: true
+  early_stop_patience: 20
+  early_stop_metric: acc/v
+  early_stop_mode: min
+  save_best: true
+  save_last: true
+  seed: 42

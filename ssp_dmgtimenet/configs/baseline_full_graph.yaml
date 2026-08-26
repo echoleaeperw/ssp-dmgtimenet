@@ -1,0 +1,25 @@
+include: default.yaml
+
+model:
+  name: full_graph_attention
+  config:
+    num_vehicles: 5
+    history_steps: 50
+    predict_steps: 30
+    target_hz: 10.0
+    d_model: 96
+    num_heads: 4
+    num_layers: 3
+    ffn_dim: 192
+    dropout: 0.1
+    time_causal: true
+
+loss:
+  weights:
+    coint: 0.0
+    delay: 0.0
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/full_graph_attention
+  tensorboard_dir: ../artifacts/tensorboard/full_graph_attention
+  report_dir: ../artifacts/reports/full_graph_attention

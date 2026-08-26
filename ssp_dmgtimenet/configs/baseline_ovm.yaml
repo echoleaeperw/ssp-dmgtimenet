@@ -1,0 +1,19 @@
+include: default.yaml
+
+model:
+  name: ovm_cascade
+  config:
+    num_vehicles: 5
+    history_steps: 50
+    predict_steps: 30
+    target_hz: 10.0
+
+loss:
+  weights:
+    coint: 0.0
+    delay: 0.0
+
+paths:
+  checkpoint_dir: ../artifacts/checkpoints/ovm_cascade
+  tensorboard_dir: ../artifacts/tensorboard/ovm_cascade
+  report_dir: ../artifacts/reports/ovm_cascade

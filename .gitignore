@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+artifacts/platoons/
+artifacts/checkpoints/
+artifacts/reports/
+artifacts/tensorboard/
+artifacts/evaluation_v3/
+artifacts/figures/
+datasets/highD/
+datasets/NGSIM/
+*.log
